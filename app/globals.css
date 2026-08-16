@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Theme tokens. Dark is the default palette (lives on :root, no class
+ * needed), and `.light` overrides it when the user picks light mode.
+ * next-themes (attribute="class", defaultTheme="dark") sets that class
+ * on <html> before first paint, so there's no flash of the wrong theme.
+ * Values are space-separated RGB triples so Tailwind's `rgb(var(...) /
+ * <alpha-value>)` pattern keeps opacity modifiers (bg-surface/95, etc.)
+ * working the same way they did with plain hex colors.
+ */
+:root {
+  color-scheme: dark;
+
+  --color-ink: 237 238 240;
+  --color-ink-soft: 156 163 175;
+  --color-canvas: 12 13 16;
+  --color-surface: 20 22 27;
+  --color-border: 40 43 52;
+  --color-border-strong: 58 62 74;
+
+  --color-accent: 129 140 248;
+  --color-accent-dark: 99 102 241;
+  --color-accent-light: 30 27 61;
+
+  --color-danger: 248 113 113;
+  --color-danger-light: 45 20 20;
+
+  --color-like: 251 113 133;
+  --color-like-light: 46 16 22;
+
+  --color-category-share: 96 165 250;
+  --color-category-share-bg: 23 37 58;
+  --color-category-sell: 251 191 36;
+  --color-category-sell-bg: 43 30 10;
+  --color-category-collab: 52 211 153;
+  --color-category-collab-bg: 8 34 24;
+  --color-category-idea: 167 139 250;
+  --color-category-idea-bg: 30 22 51;
+
+  --shimmer-highlight: rgba(255, 255, 255, 0.06);
+}
+
+.light {
+  color-scheme: light;
+
+  --color-ink: 21 24 31;
+  --color-ink-soft: 75 81 96;
+  --color-canvas: 246 247 249;
+  --color-surface: 255 255 255;
+  --color-border: 228 230 235;
+  --color-border-strong: 211 214 221;
+
+  --color-accent: 79 70 229;
+  --color-accent-dark: 67 56 202;
+  --color-accent-light: 238 240 255;
+
+  --color-danger: 220 38 38;
+  --color-danger-light: 254 242 242;
+
+  --color-like: 225 29 72;
+  --color-like-light: 255 241 242;
+
+  --color-category-share: 37 99 235;
+  --color-category-share-bg: 234 241 255;
+  --color-category-sell: 180 83 9;
+  --color-category-sell-bg: 254 243 226;
+  --color-category-collab: 15 157 88;
+  --color-category-collab-bg: 231 248 239;
+  --color-category-idea: 124 58 237;
+  --color-category-idea-bg: 243 238 255;
+
+  --shimmer-highlight: rgba(255, 255, 255, 0.7);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-ink font-body antialiased transition-colors duration-200;
+}
+
+::selection {
+  @apply bg-accent-light text-accent-dark;
+}
+
+:focus-visible {
+  outline: 2px solid theme("colors.accent.DEFAULT");
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skeleton loading shimmer used across the app while data is fetched */
+.skeleton {
+  @apply relative overflow-hidden bg-border/60;
+  background-image: linear-gradient(90deg, transparent 0, var(--shimmer-highlight) 50%, transparent 100%);
+  background-size: 400px 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
